@@ -17,15 +17,15 @@
   "test_prompts": [
     {
       "prompt_id": "tp_001",
-      "prompt": "Create a complete Manim Community Python scene that teaches why the derivative of f(x) = x^2 is f\u0027(x) = 2x. Animate a secant line approaching the tangent at x = 2, label the changing rise and run, and finish by displaying the general derivative."
+      "prompt": "Create a complete Manim Community Edition Python scene for Primary 3 pupils explaining 3/4. Show one rectangular fraction bar divided into 4 equal parts, shade exactly 3 parts blue, display the fraction label, and finish with a short recap. Return only executable Manim code."
     },
     {
       "prompt_id": "tp_002",
-      "prompt": "Create a complete Manim Community Python scene explaining the definite integral of y = x^2 from x = 0 to x = 2. Show improving Riemann-sum rectangles, transition to the shaded area under the curve, and derive the exact value 8/3."
+      "prompt": "Create a complete Manim Community Edition Python scene for Primary 4 pupils explaining 6 × 4 using an array with exactly 6 rows and 4 objects in each row. Show repeated addition, display the answer 24, and finish with a recap. Return only executable Manim code."
     }
   ],
   "model": {
-    "name": "Qwen-Calculus-SFT-Q4_K_M",
+    "name": "Chimanwakis/qwen_manim_animation_q4_k_m_v5",
     "runtime": "llama.cpp",
     "quantization": "GGUF Q4_K_M",
     "parameters_estimate": "3.09B",

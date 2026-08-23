@@ -8,9 +8,9 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODEL_DIR="$HERE/model"
 MODEL_FILE="$MODEL_DIR/qwen_manim_animation_16bit.Q4_K_M.gguf"
 PARTIAL_FILE="$MODEL_FILE.partial"
-MODEL_REVISION="37671020bb1969a74f4d70c0fe579db2116e2335"
-MODEL_URL="https://huggingface.co/Chimanwakis/qwen-calculus-sft-GGUF/resolve/$MODEL_REVISION/qwen_manim_animation_16bit.Q4_K_M.gguf"
-EXPECTED_SHA256="ce615628876cde1632fc091dace4f03062650d5ccfe0922528c9ea02645db389"
+MODEL_REVISION="91a4ff76dacebc59f954698831e3ec1afc89135f"
+MODEL_URL="https://huggingface.co/Chimanwakis/qwen_manim_animation_q4_k_m_v5/resolve/$MODEL_REVISION/qwen2.5-coder-3b-instruct.Q4_K_M.gguf"
+EXPECTED_SHA256="74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a"
 
 file_sha256() {
   if command -v sha256sum > /dev/null 2>&1; then
@@ -34,7 +34,7 @@ if [[ -f "$MODEL_FILE" ]]; then
   echo "existing model checksum does not match; downloading a verified copy" >&2
 fi
 
-echo "downloading public model (~1.93 GB) to $MODEL_FILE"
+echo "downloading public model (~1.80 GiB) to $MODEL_FILE"
 if command -v curl > /dev/null 2>&1; then
   curl -L --fail --retry 3 --retry-all-errors --progress-bar -o "$PARTIAL_FILE" "$MODEL_URL"
 elif command -v wget > /dev/null 2>&1; then

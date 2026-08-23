@@ -1,0 +1,2 @@
+run_name,base_model,dataset_rows_total,train_rows,validation_rows,dataset_sha256,global_step,best_checkpoint,best_validation_loss,final_selected_validation_loss,validation_perplexity,train_runtime_seconds,train_samples_per_second,effective_batch_size
+primary-maths-6023-run-01,unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit,6023,5722,301,1a784d85752316042438700de8c83ab5d27d246cb990b09789ac88dd34cc8fbf,603,/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/checkpoint-603,0.00942301657050848,0.009423012845218182,1.0094675492097536,14377.4706,0.669,16

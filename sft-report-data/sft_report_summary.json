@@ -1,0 +1,128 @@
+{
+  "configuration": {
+    "allow_truncation": false,
+    "batch_size": 2,
+    "checkpoint_steps": 250,
+    "checkpoint_strategy": "epoch",
+    "dataset_config": null,
+    "dataset_file": null,
+    "dataset_id": "Chimanwakis/calculus_manim",
+    "dataset_num_proc": 2,
+    "dataset_revision": null,
+    "epochs": 3.0,
+    "eval_batch_size": 2,
+    "eval_split": null,
+    "gradient_accumulation_steps": 8,
+    "hub_model_id": null,
+    "hub_private": false,
+    "hub_save_method": "merged_16bit",
+    "learning_rate": 0.0001,
+    "live_table": true,
+    "load_in_4bit": true,
+    "local_dataset_file": "/content/primary_maths_manim_qwen_messages_final_6023.jsonl",
+    "logging_steps": 10,
+    "lora_alpha": 32,
+    "lora_dropout": 0.0,
+    "lora_rank": 32,
+    "max_seq_length": 1280,
+    "max_train_samples": null,
+    "model_id": "unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit",
+    "model_revision": null,
+    "output_dir": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01",
+    "packing": true,
+    "report_to": "none",
+    "resume_from_checkpoint": null,
+    "save_merged_model": false,
+    "save_total_limit": 2,
+    "seed": 3407,
+    "train_split": "train",
+    "validation_size": 0.05,
+    "warmup_ratio": 0.05,
+    "weight_decay": 0.01
+  },
+  "created_at_utc": "2026-08-23T16:21:07.542787+00:00",
+  "dataset": {
+    "bytes": 14414323,
+    "filename": "primary_maths_manim_qwen_messages_final_6023.jsonl",
+    "path": "/content/primary_maths_manim_qwen_messages_final_6023.jsonl",
+    "sha256": "1a784d85752316042438700de8c83ab5d27d246cb990b09789ac88dd34cc8fbf",
+    "source": "local_jsonl",
+    "train_rows": 5722,
+    "validation_fraction_requested": 0.05,
+    "validation_rows": 301
+  },
+  "derived_configuration": {
+    "completion_only_loss": true,
+    "effective_batch_size_one_gpu": 16,
+    "lora_target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "loss_type": "nll",
+    "seed": 3407
+  },
+  "environment": {
+    "cuda_version": "12.8",
+    "gpu": {
+      "compute_capability": [
+        7,
+        5
+      ],
+      "name": "Tesla T4",
+      "total_memory_bytes": 15637086208
+    },
+    "packages": {
+      "accelerate": "1.14.0",
+      "datasets": "4.3.0",
+      "peft": "0.20.0",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.5.0",
+      "trl": "0.24.0",
+      "unsloth": "2026.8.19",
+      "unsloth_zoo": "2026.8.13"
+    },
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "python": "3.13.15"
+  },
+  "files": {
+    "eval_results_json": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/eval_results.json",
+    "train_results_json": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/train_results.json",
+    "trainer_state_json": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/trainer_state.json",
+    "training_history_csv": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/training_history.csv"
+  },
+  "interpretation_warning": "Training and validation loss document optimization behavior; they do not by themselves establish Manim render success, mathematical correctness, or improvement on held-out prompts.",
+  "model": {
+    "final_adapter": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/final_adapter",
+    "method": "QLoRA SFT with rsLoRA",
+    "model_id": "unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit",
+    "model_revision": null
+  },
+  "result": {
+    "best_metric": 0.00942301657050848,
+    "best_model_checkpoint": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/checkpoint-603",
+    "completed_epoch": 3.0,
+    "eval_metrics": {
+      "epoch": 3.0,
+      "eval_loss": 0.009423012845218182,
+      "eval_runtime": 89.7156,
+      "eval_samples_per_second": 3.355,
+      "eval_steps_per_second": 1.683
+    },
+    "global_step": 603,
+    "train_metrics": {
+      "epoch": 3.0,
+      "total_flos": 1.7770977193313894e+17,
+      "train_loss": 0.0416567224150471,
+      "train_runtime": 14377.4706,
+      "train_samples_per_second": 0.669,
+      "train_steps_per_second": 0.042
+    }
+  },
+  "schema_version": 1,
+  "status": "completed"
+}

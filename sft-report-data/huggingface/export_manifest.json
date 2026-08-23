@@ -1,0 +1,18 @@
+{
+  "base_model_id": "unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit",
+  "created_at_utc": "2026-08-23T17:24:35.147813+00:00",
+  "dataset_id": null,
+  "dataset_label": "primary_maths_manim_qwen_messages_final_6023.jsonl",
+  "dataset_sha256": "1a784d85752316042438700de8c83ab5d27d246cb990b09789ac88dd34cc8fbf",
+  "files": [
+    {
+      "name": "qwen2.5-coder-3b-instruct.Q4_K_M.gguf",
+      "sha256": "74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a",
+      "size_bytes": 1929902720
+    }
+  ],
+  "hub_model_id": "Chimanwakis/qwen_manim_animation_q4_k_m_v5",
+  "max_seq_length": 1280,
+  "quantization": "q4_k_m",
+  "source_model": "/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/final_adapter"
+}
