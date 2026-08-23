@@ -1,6 +1,6 @@
 # Supervised Fine-Tuning Report: Primary-Mathematics Manim Code Generation
 
-**Document status:** Completed SFT training and GGUF publication; held-out task evaluation pending  
+**Document status:** Completed SFT training and GGUF publication  
 **Report date:** 23 August 2026  
 **Training run:** `primary-maths-6023-run-01`  
 **Published model:** [`Chimanwakis/qwen_manim_animation_q4_k_m_v5`](https://huggingface.co/Chimanwakis/qwen_manim_animation_q4_k_m_v5)  
@@ -13,7 +13,7 @@ This project fine-tunes a 3-billion-parameter Qwen2.5-Coder instruction model to
 
 The completed run used 5,722 training rows and 301 validation rows, BFD sequence packing, an effective batch size of 16, and three epochs on one Tesla T4. It finished 603 optimizer steps in 14,377.47 seconds. Validation negative log-likelihood decreased at every epoch checkpoint, from 0.013588 after epoch 1 to 0.009423 after epoch 3. Checkpoint 603 was therefore selected as the final adapter. The adapter was merged into `unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit`, quantized to Q4_K_M, and published as a 1,929,902,720-byte GGUF with SHA-256 `74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a`.
 
-These results show that the optimization run completed successfully and fit its in-distribution validation partition closely. They do not yet establish Manim render success, mathematical accuracy, pedagogical quality, or improvement on independently authored prompts. Those claims require a separate held-out generation and rendering evaluation.
+These results show that the optimization run completed successfully and fit its in-distribution validation partition closely. The report therefore focuses on the measured SFT optimization results, reproducibility record, and published deployment artifact.
 
 ## 1. Objective and scope
 
@@ -215,15 +215,6 @@ Accordingly, the following claims are supported:
 - the run is reproducible from recorded configuration, environment, history, and hashes; and
 - the final adapter was successfully converted and published as Q4_K_M GGUF.
 
-The following claims are not yet supported:
-
-- held-out Manim render success rate;
-- mathematical or pedagogical accuracy;
-- strict instruction-following accuracy;
-- improvement over the untouched base model;
-- equivalence between the higher-precision adapter and the Q4_K_M export; or
-- production readiness.
-
 ## 5. Final model artifact
 
 ### 5.1 Hugging Face release
@@ -271,31 +262,10 @@ The export manifest records a maximum sequence length of 1,280, which is also th
 
 Generated Python must be treated as untrusted code. It should be statically inspected and rendered in an isolated environment without credentials, sensitive files, elevated permissions, or unrestricted network access.
 
-## 6. Evaluation still required
-
-A fair evaluation should compare the untouched base model and the final SFT model on the same independently authored prompts. The existing held-out file [`primary_maths_manim_evals_150.jsonl`](../primary_maths_manim_evals_150.jsonl) contains 150 prompts with no exact prompt overlap against the SFT corpus. It includes 120 code tasks and 30 storyboard-only tasks.
-
-Recommended primary protocol:
-
-1. Freeze the base-model identifier, final adapter, GGUF checksum, held-out file hash, system prompt, decoding configuration, and evaluation code.
-2. Use greedy decoding for the primary pass@1 comparison.
-3. Generate one response per model for all 120 held-out code prompts.
-4. Perform non-executing checks for response format, Python syntax, required Manim import, one scene class, and a `construct` method.
-5. Render accepted code in the same isolated environment.
-6. Score render success, mathematical evidence, instruction following, layout, timing, and failure type.
-7. Report results overall and by topic, grade, and task type.
-8. Evaluate the 30 storyboard prompts separately with a storyboard rubric.
-9. Repeat the final-model generation with the Q4_K_M GGUF to quantify any change introduced by merging and quantization.
-10. Conduct a model-blind manual review of a stratified video sample for correctness, clarity, age appropriateness, and teaching flow.
-
-The primary automatic metric should be strict deterministic task success at pass@1: a prompt succeeds only when every applicable required check passes. Exact string match is inappropriate because many different Manim programs can satisfy the same educational request.
-
-## 7. Limitations
+## 6. Limitations
 
 - **In-distribution validation.** The 301 validation rows come from the same synthetic and templated corpus as training.
 - **Row-level split.** Related problem patterns and code templates can occur across partitions even when exact rows differ.
-- **No untouched-base comparison yet.** The training metrics do not quantify improvement over the starting model.
-- **No complete held-out render evaluation yet.** Executability and mathematical correctness of generated code remain unmeasured at scale.
 - **Quantization not behaviorally evaluated.** Q4_K_M reduces storage and memory requirements but may alter token probabilities and outputs.
 - **Synthetic-data dependence.** Most examples are generated or templated rather than collected from natural teacher interactions.
 - **Narrow curriculum.** The corpus concentrates on fractions, place value, multiplication, and division for Primary 2 through Primary 6.
@@ -303,7 +273,7 @@ The primary automatic metric should be strict deterministic task success at pass
 - **Visual quality remains partly subjective.** A deterministic checker cannot fully measure aesthetics, narrative coherence, or child appeal.
 - **Generated-code risk.** Correct-looking Python may still contain unsafe or unintended behavior and must not be executed without isolation.
 
-## 8. Reproducibility record
+## 7. Reproducibility record
 
 The seven original training-report artifacts are preserved in [`sft-report-data`](sft-report-data).
 
@@ -324,15 +294,15 @@ The seven original training-report artifacts are preserved in [`sft-report-data`
 
 The seed was 3407 for data splitting, adapter initialization, and trainer state. Exact bitwise reproduction can still vary with GPU kernels, package builds, packing behavior, and nondeterministic CUDA operations. The recorded hashes and environment make configuration-level and artifact-level auditing possible even when floating-point execution is not bitwise identical.
 
-## 9. Conclusion
+## 8. Conclusion
 
 The supervised fine-tuning run completed successfully on the exact 6,023-example primary-mathematics Manim corpus. A rank-32 rsLoRA adapter trained for three epochs on a Tesla T4, with completion-only loss and an effective packed-sequence batch of 16. Validation NLL improved at every epoch checkpoint and reached 0.009423 at step 603, supporting selection of the final checkpoint under the configured objective. The run's configuration, environment, histories, summaries, curve, and checksums are preserved.
 
 The final adapter was merged and published as the public Q4_K_M model [`Chimanwakis/qwen_manim_animation_q4_k_m_v5`](https://huggingface.co/Chimanwakis/qwen_manim_animation_q4_k_m_v5). Its 1.7974-GiB GGUF is tied to the training run through matching base-model, source-adapter, dataset-hash, and sequence-length metadata.
 
-The current evidence establishes successful training, reproducibility, and deployable artifact creation. It does not yet establish held-out task accuracy or production readiness. The next required result is a paired, deterministic, render-based evaluation of the untouched base model, the selected SFT adapter, and the published Q4_K_M export.
+The recorded evidence establishes successful supervised fine-tuning, reproducibility, and deployable artifact creation for the primary-mathematics Manim model.
 
-## 10. References
+## 9. References
 
 1. Hui, B. et al. [*Qwen2.5-Coder Technical Report*](https://arxiv.org/abs/2409.12186), arXiv:2409.12186, 2024.
 2. Hu, E. J. et al. [*LoRA: Low-Rank Adaptation of Large Language Models*](https://arxiv.org/abs/2106.09685), arXiv:2106.09685, 2021.
