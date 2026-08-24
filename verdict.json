@@ -1,0 +1,49 @@
+{
+  "team_id": "ai-maths-animator",
+  "verdict": "pass",
+  "checks": [
+    {
+      "field": "memory.peak_rss_mb",
+      "submission": 2037.93,
+      "audit": 2037.34,
+      "delta_pct": -0.03,
+      "tolerance_pct": 15.0,
+      "status": "pass"
+    },
+    {
+      "field": "memory.steady_state_rss_mb",
+      "submission": 1927.09,
+      "audit": 1917.8,
+      "delta_pct": -0.48,
+      "tolerance_pct": 15.0,
+      "status": "pass"
+    },
+    {
+      "field": "throughput.tokens_per_second_generation",
+      "submission": 27.48,
+      "audit": 29.16,
+      "delta_pct": 6.11,
+      "tolerance_pct": 25.0,
+      "status": "pass"
+    },
+    {
+      "field": "throughput.first_token_latency_ms",
+      "submission": 476.91,
+      "audit": 431.6,
+      "delta_pct": -9.5,
+      "tolerance_pct": 25.0,
+      "status": "pass"
+    }
+  ],
+  "accuracy_audit": [
+    {
+      "benchmark": "arc_easy",
+      "dataset_version": "lm-eval-harness",
+      "language": "en",
+      "samples": 50,
+      "score": 0.78,
+      "metric": "acc_norm"
+    }
+  ],
+  "notes": []
+}

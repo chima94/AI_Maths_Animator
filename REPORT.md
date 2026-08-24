@@ -1,11 +1,13 @@
-# Supervised Fine-Tuning Report: Primary-Mathematics Manim Code Generation
+# Supervised Fine-Tuning Report: Primary-Mathematics Manim Animation Code Generation
 
 **Document status:** Completed SFT training and GGUF publication  
 **Report date:** 23 August 2026  
 **Training run:** `primary-maths-6023-run-01`  
 **Published model:** [`Chimanwakis/qwen_manim_animation_q4_k_m_v5`](https://huggingface.co/Chimanwakis/qwen_manim_animation_q4_k_m_v5)  
 **Published revision:** `91a4ff76dacebc59f954698831e3ec1afc89135f`  
-**Deployment format:** GGUF, Q4_K_M  
+**Deployment format:** GGUF, Q4_K_M
+
+[Note]: During Testing, Judges can test the generated code in this website (https://animg.app/en/playground)
 
 ## Abstract
 
@@ -17,7 +19,7 @@ These results show that the optimization run completed successfully and fit its 
 
 ## 1. Objective and scope
 
-The objective is to create a specialist code-generation model that can turn primary-school mathematics instructions into clear, executable Manim scenes. The target behavior includes:
+The objective is to create a specialist code-generation model that can turn primary-school mathematics instructions into clear, executable Manim animation scenes. The target behavior includes:
 
 - complete Python programs beginning with `from manim import *`;
 - exactly one Manim `Scene` class with a `construct` method;
@@ -46,34 +48,34 @@ The file contains 6,023 JSONL records. Every record is a single `system -> user 
 
 ### 2.2 Dataset composition
 
-| Source block | Examples |
-|---|---:|
-| Foundation topic dataset | 2,700 |
-| Instruction-following repair | 600 |
-| Instruction-gap repair | 1,000 |
-| Repairs derived from real model generations | 123 |
-| Outcome-boost examples | 800 |
-| Targeted Manim error repairs | 800 |
-| **Total** | **6,023** |
+| Source block                                |  Examples |
+| ------------------------------------------- | --------: |
+| Foundation topic dataset                    |     2,700 |
+| Instruction-following repair                |       600 |
+| Instruction-gap repair                      |     1,000 |
+| Repairs derived from real model generations |       123 |
+| Outcome-boost examples                      |       800 |
+| Targeted Manim error repairs                |       800 |
+| **Total**                                   | **6,023** |
 
 Topic distribution:
 
-| Topic | Examples |
-|---|---:|
-| Multiplication and Division | 2,147 |
-| Fractions | 2,003 |
-| Place Value | 1,873 |
-| **Total** | **6,023** |
+| Topic                       |  Examples |
+| --------------------------- | --------: |
+| Multiplication and Division |     2,147 |
+| Fractions                   |     2,003 |
+| Place Value                 |     1,873 |
+| **Total**                   | **6,023** |
 
 Grade distribution:
 
-| Grade | Examples |
-|---|---:|
-| Primary 2 | 973 |
-| Primary 3 | 1,261 |
-| Primary 4 | 1,182 |
-| Primary 5 | 1,322 |
-| Primary 6 | 1,285 |
+| Grade     |  Examples |
+| --------- | --------: |
+| Primary 2 |       973 |
+| Primary 3 |     1,261 |
+| Primary 4 |     1,182 |
+| Primary 5 |     1,322 |
+| Primary 6 |     1,285 |
 | **Total** | **6,023** |
 
 The 2,700-example foundation block is balanced across fractions, place value, and multiplication/division. Its task types include direct topic-to-code generation, topic-to-storyboard generation, storyboard-to-code conversion, bad-code repair, and error-message repair. Later blocks add instruction-following constraints, repairs derived from observed generations, exact visual-count corrections, duration control, layout and readability corrections, and replacements for hallucinated Manim APIs.
@@ -113,35 +115,35 @@ where `A` and `B` are rank-32 trainable matrices and `s` is the rsLoRA scaling f
 
 ### 3.3 Recorded configuration
 
-| Parameter | Recorded value |
-|---|---|
-| Base model | `unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit` |
-| Method | Four-bit QLoRA with rsLoRA |
-| LoRA rank / alpha / dropout | 32 / 32 / 0.0 |
-| LoRA targets | Q, K, V, O, gate, up, down projections |
-| Maximum sequence length | 1,280 tokens |
-| Loss | Completion-only token NLL |
-| Training packing | BFD packing enabled |
-| Evaluation packing | Disabled |
-| Dataset split | 5,722 training / 301 validation rows |
-| Split seed | 3407 |
-| Per-device training batch | 2 packed sequences |
-| Gradient accumulation | 8 |
-| Effective batch | 16 packed sequences |
-| Per-device evaluation batch | 2 rows |
-| Epochs | 3 |
-| Optimizer steps | 603 total; 201 per epoch |
-| Initial learning rate | `1e-4` |
-| Warmup | 5% of total steps |
-| Scheduler | Cosine decay |
-| Optimizer | 8-bit AdamW |
-| Weight decay | 0.01 |
-| Gradient clipping | 1.0 |
-| Precision | FP16 on Tesla T4 |
-| Gradient checkpointing | Enabled |
-| Checkpoint strategy | Evaluate and save once per epoch |
-| Retained checkpoints | 2 |
-| Selection metric | Lowest validation loss |
+| Parameter                   | Recorded value                               |
+| --------------------------- | -------------------------------------------- |
+| Base model                  | `unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit` |
+| Method                      | Four-bit QLoRA with rsLoRA                   |
+| LoRA rank / alpha / dropout | 32 / 32 / 0.0                                |
+| LoRA targets                | Q, K, V, O, gate, up, down projections       |
+| Maximum sequence length     | 1,280 tokens                                 |
+| Loss                        | Completion-only token NLL                    |
+| Training packing            | BFD packing enabled                          |
+| Evaluation packing          | Disabled                                     |
+| Dataset split               | 5,722 training / 301 validation rows         |
+| Split seed                  | 3407                                         |
+| Per-device training batch   | 2 packed sequences                           |
+| Gradient accumulation       | 8                                            |
+| Effective batch             | 16 packed sequences                          |
+| Per-device evaluation batch | 2 rows                                       |
+| Epochs                      | 3                                            |
+| Optimizer steps             | 603 total; 201 per epoch                     |
+| Initial learning rate       | `1e-4`                                       |
+| Warmup                      | 5% of total steps                            |
+| Scheduler                   | Cosine decay                                 |
+| Optimizer                   | 8-bit AdamW                                  |
+| Weight decay                | 0.01                                         |
+| Gradient clipping           | 1.0                                          |
+| Precision                   | FP16 on Tesla T4                             |
+| Gradient checkpointing      | Enabled                                      |
+| Checkpoint strategy         | Evaluate and save once per epoch             |
+| Retained checkpoints        | 2                                            |
+| Selection metric            | Lowest validation loss                       |
 
 The 1,280-token limit was selected from earlier measurements with the same tokenizer: median 581 tokens, 95th percentile 1,003, and maximum 1,227. The trainer was configured to fail rather than silently truncate a row above the limit.
 
@@ -151,21 +153,21 @@ The seeded 5% validation partition contains 301 rows, leaving 5,722 for training
 
 ### 3.5 Training environment
 
-| Component | Recorded value |
-|---|---|
-| GPU | Tesla T4 |
-| GPU memory | 15,637,086,208 bytes (14.56 GiB) |
-| Operating environment | Linux 6.6.122+, x86-64, glibc 2.35 |
-| Python | 3.13.15 |
-| CUDA reported by PyTorch | 12.8 |
-| PyTorch | 2.11.0+cu128 |
-| Unsloth | 2026.8.19 |
-| Unsloth Zoo | 2026.8.13 |
-| Transformers | 5.5.0 |
-| TRL | 0.24.0 |
-| Datasets | 4.3.0 |
-| PEFT | 0.20.0 |
-| Accelerate | 1.14.0 |
+| Component                | Recorded value                     |
+| ------------------------ | ---------------------------------- |
+| GPU                      | Tesla T4                           |
+| GPU memory               | 15,637,086,208 bytes (14.56 GiB)   |
+| Operating environment    | Linux 6.6.122+, x86-64, glibc 2.35 |
+| Python                   | 3.13.15                            |
+| CUDA reported by PyTorch | 12.8                               |
+| PyTorch                  | 2.11.0+cu128                       |
+| Unsloth                  | 2026.8.19                          |
+| Unsloth Zoo              | 2026.8.13                          |
+| Transformers             | 5.5.0                              |
+| TRL                      | 0.24.0                             |
+| Datasets                 | 4.3.0                              |
+| PEFT                     | 0.20.0                             |
+| Accelerate               | 1.14.0                             |
 
 ## 4. Training results
 
@@ -174,10 +176,10 @@ The seeded 5% validation partition contains 301 rows, leaving 5,722 for training
 The run completed all three configured epochs and all 603 optimizer steps without a recorded interruption. Validation was performed at the end of each epoch. The lowest validation NLL occurred at the final checkpoint, so checkpoint 603 was selected and loaded as the final adapter.
 
 | Epoch | Step | Last logged training NLL | Validation NLL | Validation perplexity | Evaluation runtime |
-|---:|---:|---:|---:|---:|---:|
-| 1 | 201 | 0.015472 at step 200 | 0.013588 | 1.013680 | 88.47 s |
-| 2 | 402 | 0.009501 at step 400 | 0.009880 | 1.009929 | 88.24 s |
-| 3 | 603 | 0.007535 at step 600 | 0.009423 | 1.009468 | 88.14 s |
+| ----: | ---: | -----------------------: | -------------: | --------------------: | -----------------: |
+|     1 |  201 |     0.015472 at step 200 |       0.013588 |              1.013680 |            88.47 s |
+|     2 |  402 |     0.009501 at step 400 |       0.009880 |              1.009929 |            88.24 s |
+|     3 |  603 |     0.007535 at step 600 |       0.009423 |              1.009468 |            88.14 s |
 
 The separate final evaluation of the selected model returned an NLL of 0.0094230128 in 89.72 seconds, consistent with the epoch-3 checkpoint evaluation to numerical precision.
 
@@ -191,15 +193,15 @@ Validation NLL decreased from 0.013588 after epoch 1 to 0.009880 after epoch 2 a
 
 ### 4.3 Runtime and throughput
 
-| Measure | Result |
-|---|---:|
-| Training runtime | 14,377.47 s |
-| Equivalent wall time | 3 h 59 min 37 s |
-| Training throughput | 0.669 packed sequences/s |
-| Optimizer throughput | 0.042 steps/s |
-| Final evaluation throughput | 3.355 rows/s |
-| Final evaluation step throughput | 1.683 steps/s |
-| Reported total FLOPs | $1.7771 \times 10^{17}$ |
+| Measure                          |                   Result |
+| -------------------------------- | -----------------------: |
+| Training runtime                 |              14,377.47 s |
+| Equivalent wall time             |          3 h 59 min 37 s |
+| Training throughput              | 0.669 packed sequences/s |
+| Optimizer throughput             |            0.042 steps/s |
+| Final evaluation throughput      |             3.355 rows/s |
+| Final evaluation step throughput |            1.683 steps/s |
+| Reported total FLOPs             |  $1.7771 \times 10^{17}$ |
 
 Because packing combines multiple short conversations into fixed-length blocks, training throughput is expressed in packed sequences rather than original JSONL rows.
 
@@ -238,19 +240,19 @@ The published metadata is preserved locally under [`sft-report-data/huggingface`
 
 ### 5.2 Export provenance
 
-| Field | Recorded value |
-|---|---|
-| Source adapter | `/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/final_adapter` |
-| Selected training checkpoint | 603 |
-| Merged base | `unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit` |
-| Quantization | Q4_K_M |
-| GGUF filename | `qwen2.5-coder-3b-instruct.Q4_K_M.gguf` |
-| GGUF size | 1,929,902,720 bytes |
-| GGUF size in GiB | 1.7974 GiB |
-| GGUF SHA-256 | `74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a` |
-| Exported maximum sequence length | 1,280 |
-| Export timestamp | 23 August 2026, 17:24:35 UTC |
-| Dataset SHA-256 in manifest | `1a784d85752316042438700de8c83ab5d27d246cb990b09789ac88dd34cc8fbf` |
+| Field                            | Recorded value                                                             |
+| -------------------------------- | -------------------------------------------------------------------------- |
+| Source adapter                   | `/content/drive/MyDrive/manim-sft/primary-maths-6023-run-01/final_adapter` |
+| Selected training checkpoint     | 603                                                                        |
+| Merged base                      | `unsloth/Qwen2.5-Coder-3B-Instruct-bnb-4bit`                               |
+| Quantization                     | Q4_K_M                                                                     |
+| GGUF filename                    | `qwen2.5-coder-3b-instruct.Q4_K_M.gguf`                                    |
+| GGUF size                        | 1,929,902,720 bytes                                                        |
+| GGUF size in GiB                 | 1.7974 GiB                                                                 |
+| GGUF SHA-256                     | `74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a`         |
+| Exported maximum sequence length | 1,280                                                                      |
+| Export timestamp                 | 23 August 2026, 17:24:35 UTC                                               |
+| Dataset SHA-256 in manifest      | `1a784d85752316042438700de8c83ab5d27d246cb990b09789ac88dd34cc8fbf`         |
 
 The dataset hash in the export manifest exactly matches the training report. The GGUF checksum in `SHA256SUMS` exactly matches the export manifest and the Hugging Face linked-file metadata.
 
@@ -277,20 +279,20 @@ Generated Python must be treated as untrusted code. It should be statically insp
 
 The seven original training-report artifacts are preserved in [`sft-report-data`](sft-report-data).
 
-| Artifact | SHA-256 |
-|---|---|
-| Training dataset | `1a784d85752316042438700de8c83ab5d27d246cb990b09789ac88dd34cc8fbf` |
-| Training script | `8b16b41e6249e58202128d91ccb68416e4341e33b565f630602e6da1caa0e25a` |
-| `eval_results.json` | `dbe959011fae26c5c8ff9251bd5d2744d5b194fbf49ce68aefb0af8fe873cc86` |
-| `train_results.json` | `03976d986eedf5030d35a51d3a4cd4c82f18967b7297332636c4a826cc12ab8e` |
-| `trainer_state.json` | `03bc8e96b7589ab346de04fd2a51dc1bfb9ddf37418143521a68803bcb12c6c7` |
-| `training_history.csv` | `1ce1db994d1ba03ddfb4c6addfafaae0f25b615908f3a5ec5bcf8bf49e6f376a` |
-| `sft_report_summary.json` | `69c9c8bcb9aaf6ff5e9b4793453361bb106944d9eb0ebb2398dcef4a1bbc6c7b` |
-| `sft_report_table.csv` | `566f63158222e807e54c1d5eb829abaec4d692b8c008e1fd56a921a57d8351e8` |
-| `sft_loss_curve.png` | `2ac55d00946bc5c8ff9251bd5d2744d5b194fbf49ce68aefb0af8fe873cc86` |
-| Published GGUF | `74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a` |
+| Artifact                           | SHA-256                                                            |
+| ---------------------------------- | ------------------------------------------------------------------ |
+| Training dataset                   | `1a784d85752316042438700de8c83ab5d27d246cb990b09789ac88dd34cc8fbf` |
+| Training script                    | `8b16b41e6249e58202128d91ccb68416e4341e33b565f630602e6da1caa0e25a` |
+| `eval_results.json`                | `dbe959011fae26c5c8ff9251bd5d2744d5b194fbf49ce68aefb0af8fe873cc86` |
+| `train_results.json`               | `03976d986eedf5030d35a51d3a4cd4c82f18967b7297332636c4a826cc12ab8e` |
+| `trainer_state.json`               | `03bc8e96b7589ab346de04fd2a51dc1bfb9ddf37418143521a68803bcb12c6c7` |
+| `training_history.csv`             | `1ce1db994d1ba03ddfb4c6addfafaae0f25b615908f3a5ec5bcf8bf49e6f376a` |
+| `sft_report_summary.json`          | `69c9c8bcb9aaf6ff5e9b4793453361bb106944d9eb0ebb2398dcef4a1bbc6c7b` |
+| `sft_report_table.csv`             | `566f63158222e807e54c1d5eb829abaec4d692b8c008e1fd56a921a57d8351e8` |
+| `sft_loss_curve.png`               | `2ac55d00946bc5c8ff9251bd5d2744d5b194fbf49ce68aefb0af8fe873cc86`   |
+| Published GGUF                     | `74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a` |
 | Published export manifest snapshot | `4a28926cb139a6b195581ede6522ec7cb8872e2d1b5c1d5f7ca5d519e3e68297` |
-| Published `SHA256SUMS` snapshot | `ea100d767d5b13e95b37f4fc36ba41000edb228aea7fdd3e3ccf494298b7b5a2` |
+| Published `SHA256SUMS` snapshot    | `ea100d767d5b13e95b37f4fc36ba41000edb228aea7fdd3e3ccf494298b7b5a2` |
 
 The seed was 3407 for data splitting, adapter initialization, and trainer state. Exact bitwise reproduction can still vary with GPU kernels, package builds, packing behavior, and nondeterministic CUDA operations. The recorded hashes and environment make configuration-level and artifact-level auditing possible even when floating-point execution is not bitwise identical.
 
@@ -304,10 +306,10 @@ The recorded evidence establishes successful supervised fine-tuning, reproducibi
 
 ## 9. References
 
-1. Hui, B. et al. [*Qwen2.5-Coder Technical Report*](https://arxiv.org/abs/2409.12186), arXiv:2409.12186, 2024.
-2. Hu, E. J. et al. [*LoRA: Low-Rank Adaptation of Large Language Models*](https://arxiv.org/abs/2106.09685), arXiv:2106.09685, 2021.
-3. Dettmers, T. et al. [*QLoRA: Efficient Finetuning of Quantized LLMs*](https://arxiv.org/abs/2305.14314), NeurIPS 2023.
+1. Hui, B. et al. [_Qwen2.5-Coder Technical Report_](https://arxiv.org/abs/2409.12186), arXiv:2409.12186, 2024.
+2. Hu, E. J. et al. [_LoRA: Low-Rank Adaptation of Large Language Models_](https://arxiv.org/abs/2106.09685), arXiv:2106.09685, 2021.
+3. Dettmers, T. et al. [_QLoRA: Efficient Finetuning of Quantized LLMs_](https://arxiv.org/abs/2305.14314), NeurIPS 2023.
 4. Qwen Team. [`Qwen2.5-Coder-3B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-Coder-3B-Instruct), Hugging Face model repository.
-5. Unsloth. [*Saving and using fine-tuned models*](https://docs.unsloth.ai/basics/saving-and-using-models), Unsloth documentation.
-6. Manim Community. [*Manim Community documentation*](https://docs.manim.community/).
+5. Unsloth. [_Saving and using fine-tuned models_](https://docs.unsloth.ai/basics/saving-and-using-models), Unsloth documentation.
+6. Manim Community. [_Manim Community documentation_](https://docs.manim.community/).
 7. Chimanwakis. [`qwen_manim_animation_q4_k_m_v5`](https://huggingface.co/Chimanwakis/qwen_manim_animation_q4_k_m_v5), final SFT GGUF repository, revision `91a4ff76dacebc59f954698831e3ec1afc89135f`.

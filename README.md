@@ -1,5 +1,7 @@
 # AI Maths Animator — Primary-Mathematics 3B Offline Release
 
+[Note]: During Testing, Judges can test the generated code in this website (https://animg.app/en/playground)
+
 > **Turn a teacher's lesson idea into a visual storyboard or executable Manim
 > animation code—locally, privately, and without requiring the teacher to know
 > Python.**
@@ -16,18 +18,18 @@ covers fractions, place value, multiplication, and division from Primary 2 to
 Primary 6. The final three-billion-parameter model is distributed as a compact
 `Q4_K_M` GGUF and runs locally through `llama.cpp` after a one-time download.
 
-| Submission fact | Measured evidence |
-|---|---:|
-| Supervised examples | **6,023** |
-| Training / validation rows | **5,722 / 301** |
-| Curriculum topics | **Fractions, Place Value, Multiplication and Division** |
-| Grade levels | **Primary 2–Primary 6** |
-| Training epochs / optimizer steps | **3 / 603** |
-| Selected validation NLL | **0.009423** |
-| Selected checkpoint | **603** |
-| Training time | **3 h 59 min 37 s on one Tesla T4** |
-| Deployment artifact | **GGUF Q4_K_M, 1.7974 GiB** |
-| Runtime | **`llama.cpp`, offline** |
+| Submission fact                   |                                       Measured evidence |
+| --------------------------------- | ------------------------------------------------------: |
+| Supervised examples               |                                               **6,023** |
+| Training / validation rows        |                                         **5,722 / 301** |
+| Curriculum topics                 | **Fractions, Place Value, Multiplication and Division** |
+| Grade levels                      |                                 **Primary 2–Primary 6** |
+| Training epochs / optimizer steps |                                             **3 / 603** |
+| Selected validation NLL           |                                            **0.009423** |
+| Selected checkpoint               |                                                 **603** |
+| Training time                     |                     **3 h 59 min 37 s on one Tesla T4** |
+| Deployment artifact               |                             **GGUF Q4_K_M, 1.7974 GiB** |
+| Runtime                           |                                **`llama.cpp`, offline** |
 
 ## Why this problem matters
 
@@ -79,22 +81,22 @@ external assets.
 
 ### Topics
 
-| Topic | Examples |
-|---|---:|
-| Multiplication and Division | 2,147 |
-| Fractions | 2,003 |
-| Place Value | 1,873 |
-| **Total** | **6,023** |
+| Topic                       |  Examples |
+| --------------------------- | --------: |
+| Multiplication and Division |     2,147 |
+| Fractions                   |     2,003 |
+| Place Value                 |     1,873 |
+| **Total**                   | **6,023** |
 
 ### Grade levels
 
-| Grade | Examples |
-|---|---:|
-| Primary 2 | 973 |
-| Primary 3 | 1,261 |
-| Primary 4 | 1,182 |
-| Primary 5 | 1,322 |
-| Primary 6 | 1,285 |
+| Grade     |  Examples |
+| --------- | --------: |
+| Primary 2 |       973 |
+| Primary 3 |     1,261 |
+| Primary 4 |     1,182 |
+| Primary 5 |     1,322 |
+| Primary 6 |     1,285 |
 | **Total** | **6,023** |
 
 Examples teach concepts such as equal fraction parts, numerator and denominator,
@@ -107,15 +109,15 @@ scope of this release is limited to these primary-mathematics areas.
 Instead of collecting only direct prompt-and-answer pairs, we built a multi-task
 training mixture that combines generation and repair behavior.
 
-| Source block | Examples |
-|---|---:|
-| Foundation topic dataset | 2,700 |
-| Instruction-following repair | 600 |
-| Instruction-gap repair | 1,000 |
-| Repairs derived from real generations | 123 |
-| Outcome-boost examples | 800 |
-| Targeted Manim error repairs | 800 |
-| **Total** | **6,023** |
+| Source block                          |  Examples |
+| ------------------------------------- | --------: |
+| Foundation topic dataset              |     2,700 |
+| Instruction-following repair          |       600 |
+| Instruction-gap repair                |     1,000 |
+| Repairs derived from real generations |       123 |
+| Outcome-boost examples                |       800 |
+| Targeted Manim error repairs          |       800 |
+| **Total**                             | **6,023** |
 
 The later repair blocks focus on failures that appeared in real or representative
 model outputs:
@@ -167,25 +169,25 @@ rank-32 rsLoRA adapters across the attention and MLP projection layers.
 
 ### Recorded training configuration
 
-| Setting | Value |
-|---|---|
-| Objective | Completion-only supervised fine-tuning |
-| Base loading | 4-bit QLoRA |
-| LoRA rank / alpha / dropout | 32 / 32 / 0.0 |
-| LoRA variant | Rank-stabilized LoRA |
-| Target modules | Q, K, V, O, gate, up, down projections |
-| Maximum sequence length | 1,280 tokens |
-| Training packing | BFD packing enabled |
-| Micro-batch / accumulation | 2 / 8 |
-| Effective batch | 16 packed sequences |
-| Epochs | 3 |
-| Optimizer | 8-bit AdamW |
-| Peak learning rate | `1e-4` |
-| Schedule | Cosine decay with 5% warmup |
-| Weight decay / gradient clipping | 0.01 / 1.0 |
-| Evaluation and checkpointing | Once per epoch |
-| Best-model metric | Minimum validation NLL |
-| Seed | 3407 |
+| Setting                          | Value                                  |
+| -------------------------------- | -------------------------------------- |
+| Objective                        | Completion-only supervised fine-tuning |
+| Base loading                     | 4-bit QLoRA                            |
+| LoRA rank / alpha / dropout      | 32 / 32 / 0.0                          |
+| LoRA variant                     | Rank-stabilized LoRA                   |
+| Target modules                   | Q, K, V, O, gate, up, down projections |
+| Maximum sequence length          | 1,280 tokens                           |
+| Training packing                 | BFD packing enabled                    |
+| Micro-batch / accumulation       | 2 / 8                                  |
+| Effective batch                  | 16 packed sequences                    |
+| Epochs                           | 3                                      |
+| Optimizer                        | 8-bit AdamW                            |
+| Peak learning rate               | `1e-4`                                 |
+| Schedule                         | Cosine decay with 5% warmup            |
+| Weight decay / gradient clipping | 0.01 / 1.0                             |
+| Evaluation and checkpointing     | Once per epoch                         |
+| Best-model metric                | Minimum validation NLL                 |
+| Seed                             | 3407                                   |
 
 Completion-only loss trains the desired assistant response while masking the
 system and user prompt tokens. Sequence packing reduces padding overhead while
@@ -202,20 +204,20 @@ The run completed all three epochs and 603 optimizer steps on one Tesla T4.
 Validation NLL decreased at each checkpoint, so the final checkpoint was selected.
 
 | Epoch | Step | Last logged training NLL | Validation NLL | Validation perplexity |
-|---:|---:|---:|---:|---:|
-| 1 | 201 | 0.015472 at step 200 | 0.013588 | 1.013680 |
-| 2 | 402 | 0.009501 at step 400 | 0.009880 | 1.009929 |
-| 3 | 603 | 0.007535 at step 600 | **0.009423** | **1.009468** |
+| ----: | ---: | -----------------------: | -------------: | --------------------: |
+|     1 |  201 |     0.015472 at step 200 |       0.013588 |              1.013680 |
+|     2 |  402 |     0.009501 at step 400 |       0.009880 |              1.009929 |
+|     3 |  603 |     0.007535 at step 600 |   **0.009423** |          **1.009468** |
 
-| Final training statistic | Value |
-|---|---:|
-| Run-average training NLL | 0.041657 |
-| Best checkpoint | `checkpoint-603` |
-| Training runtime | 14,377.47 s (3 h 59 min 37 s) |
-| Training throughput | 0.669 packed sequences/s |
-| Optimizer throughput | 0.042 steps/s |
-| Final evaluation runtime | 89.72 s |
-| Total floating-point operations reported | `1.7771 × 10^17` |
+| Final training statistic                 |                         Value |
+| ---------------------------------------- | ----------------------------: |
+| Run-average training NLL                 |                      0.041657 |
+| Best checkpoint                          |              `checkpoint-603` |
+| Training runtime                         | 14,377.47 s (3 h 59 min 37 s) |
+| Training throughput                      |      0.669 packed sequences/s |
+| Optimizer throughput                     |                 0.042 steps/s |
+| Final evaluation runtime                 |                       89.72 s |
+| Total floating-point operations reported |              `1.7771 × 10^17` |
 
 Validation NLL improved by 30.65% between epochs 1 and 3. The third epoch still
 improved the recorded objective by 4.63% over epoch 2, supporting selection of
@@ -237,16 +239,16 @@ trainer state, histories, hashes, and published-model metadata under
 The final model is published at
 [`Chimanwakis/qwen_manim_animation_q4_k_m_v5`](https://huggingface.co/Chimanwakis/qwen_manim_animation_q4_k_m_v5).
 
-| Artifact property | Value |
-|---|---|
-| Remote file | `qwen2.5-coder-3b-instruct.Q4_K_M.gguf` |
-| Quantization | `Q4_K_M` |
-| File size | 1,929,902,720 bytes (1.7974 GiB) |
-| Architecture | Qwen2 causal language model |
-| Parameter estimate | 3.09B |
-| Training/export sequence length | 1,280 tokens |
-| Pinned Hub revision | `91a4ff76dacebc59f954698831e3ec1afc89135f` |
-| SHA-256 | `74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a` |
+| Artifact property               | Value                                                              |
+| ------------------------------- | ------------------------------------------------------------------ |
+| Remote file                     | `qwen2.5-coder-3b-instruct.Q4_K_M.gguf`                            |
+| Quantization                    | `Q4_K_M`                                                           |
+| File size                       | 1,929,902,720 bytes (1.7974 GiB)                                   |
+| Architecture                    | Qwen2 causal language model                                        |
+| Parameter estimate              | 3.09B                                                              |
+| Training/export sequence length | 1,280 tokens                                                       |
+| Pinned Hub revision             | `91a4ff76dacebc59f954698831e3ec1afc89135f`                         |
+| SHA-256                         | `74f3523c47193a67183ceee512087e38aa615848ff56402e8d6355144217a40a` |
 
 The download script intentionally stores the remote GGUF at the submission's
 local compatibility path:
@@ -331,14 +333,14 @@ demonstrations, not a substitute for a larger hidden evaluation set.
 
 ## ADTC challenge alignment
 
-| Judging dimension | Design response |
-|---|---|
-| Accuracy | Multi-task curriculum data plus generation and realistic repair examples |
-| Performance | Compact 3B architecture and native `llama.cpp` GGUF inference |
-| Efficiency | 1.7974-GiB Q4_K_M weights and bounded 1,280-token evaluation context |
-| Cross-disciplinary integration | Mathematics education, visual lesson design, and executable code generation |
-| Offline value | No inference API or network connection required after download |
-| Auditability | Pinned revision, checksums, source scripts, full training history, and explicit limitations |
+| Judging dimension              | Design response                                                                             |
+| ------------------------------ | ------------------------------------------------------------------------------------------- |
+| Accuracy                       | Multi-task curriculum data plus generation and realistic repair examples                    |
+| Performance                    | Compact 3B architecture and native `llama.cpp` GGUF inference                               |
+| Efficiency                     | 1.7974-GiB Q4_K_M weights and bounded 1,280-token evaluation context                        |
+| Cross-disciplinary integration | Mathematics education, visual lesson design, and executable code generation                 |
+| Offline value                  | No inference API or network connection required after download                              |
+| Auditability                   | Pinned revision, checksums, source scripts, full training history, and explicit limitations |
 
 ### Target environment
 
@@ -349,19 +351,41 @@ demonstrations, not a substitute for a larger hidden evaluation set.
 - `llama.cpp`; and
 - no network access during judged inference.
 
-### On-device benchmark status
+### On-device profiler results
 
-Training metrics are measured. The following deployment metrics remain pending
-the official participant-mode profiler and are not estimated from GPU training:
+The participant-mode results are preserved in [`submission.json`](submission.json).
+They were produced with `adtc-profiler 0.1.0` using schema version `1.1.0`.
 
-| Metric | Status |
-|---|---|
-| Peak inference RAM | Pending profiler |
-| Time to first token | Pending profiler |
-| Prompt-processing speed | Pending profiler |
-| Generation speed | Pending profiler |
-| Thermal throttling | Pending profiler |
-| Official participant accuracy score | Pending profiler |
+| Measured environment             | Recorded value                        |
+| -------------------------------- | ------------------------------------- |
+| Device class                     | Participant laptop                    |
+| Operating system                 | Windows 11 (`10.0.26200`)             |
+| CPU                              | Intel64 Family 6 Model 154 Stepping 3 |
+| GPU                              | NVIDIA GeForce RTX 3050 Ti Laptop GPU |
+| System RAM                       | 15.7 GB                               |
+| Model parameters detected        | 3,085,938,688                         |
+| Claimed/detected parameter match | Yes                                   |
+
+| Profiler metric              |                          Measured result |
+| ---------------------------- | ---------------------------------------: |
+| Generation throughput        |                       **27.48 tokens/s** |
+| Time to first token          |                            **476.91 ms** |
+| Profiler workload            | 512 prompt tokens / 128 generated tokens |
+| Peak process RSS             |                          **2,037.93 MB** |
+| Steady-state process RSS     |                              1,927.09 MB |
+| Peak process VMS             |                                848.80 MB |
+| CPU utilization, p99         |                                    92.2% |
+| Thermal throttling reported  |                                   **No** |
+| Peak core temperature        |                             Not recorded |
+| ARC-Easy normalized accuracy |                 **0.78 over 50 samples** |
+
+ARC-Easy measures general reasoning and is not a Manim render-success or
+primary-mathematics animation score. The performance measurements describe the
+recorded RTX 3050 Ti participant laptop and should not be interpreted as
+integrated-graphics-only results. The profiler records random seed `42` and Git
+revision `b453c1bb85ee` for reproducibility.
+
+To reproduce the participant-mode profile:
 
 ```bash
 adtc-profiler run \
@@ -378,33 +402,20 @@ the final SFT model on the same independently authored prompts.
 
 The planned evaluation measures:
 
-| Dimension | Check |
-|---|---|
-| Output format | Code-only or storyboard-only response as requested |
-| Python validity | `ast.parse` succeeds |
-| Manim structure | Required import, one scene, and one `construct` method |
-| Render success | Scene renders in an isolated Manim environment |
-| Mathematical correctness | Required quantities, equations, counts, and conclusions are visible |
-| Instruction following | Grade, visual model, colour, layout, duration, and recap constraints |
-| Visual integrity | No off-frame objects, unresolved overlaps, or unreadable text |
-| Pedagogy | Clear progression from concept to demonstration and recap |
-| Quantization fidelity | Compare final adapter outputs with Q4_K_M outputs |
+| Dimension                | Check                                                                |
+| ------------------------ | -------------------------------------------------------------------- |
+| Output format            | Code-only or storyboard-only response as requested                   |
+| Python validity          | `ast.parse` succeeds                                                 |
+| Manim structure          | Required import, one scene, and one `construct` method               |
+| Render success           | Scene renders in an isolated Manim environment                       |
+| Mathematical correctness | Required quantities, equations, counts, and conclusions are visible  |
+| Instruction following    | Grade, visual model, colour, layout, duration, and recap constraints |
+| Visual integrity         | No off-frame objects, unresolved overlaps, or unreadable text        |
+| Pedagogy                 | Clear progression from concept to demonstration and recap            |
+| Quantization fidelity    | Compare final adapter outputs with Q4_K_M outputs                    |
 
 Primary reporting will use deterministic pass@1 generation. Code outputs will be
 treated as untrusted and rendered only inside a sandbox.
-
-## Safety, privacy, and responsible use
-
-- Generated mathematics can still be wrong and should be reviewed by an
-  educator before classroom use.
-- Generated Python is executable code and must be inspected and run in an
-  isolated environment without credentials or unrestricted network access.
-- AI Maths Animator is an educational authoring assistant, not an autonomous
-  examiner or grading authority.
-- Offline inference keeps prompts and drafts on the local device.
-- The release is English-only and does not claim an African-language bonus.
-- Teachers remain responsible for age appropriateness, accessibility, and final
-  lesson quality.
 
 ## Known limitations
 
@@ -415,8 +426,8 @@ treated as untrusted and rendered only inside a sandbox.
 3. Complete held-out render and mathematical evaluation is still pending.
 4. Q4_K_M behavior has not yet been compared systematically with the final
    higher-precision adapter.
-5. CPU speed, peak RAM, and thermal performance remain pending the official
-   profiler.
+5. The recorded inference profile used an RTX 3050 Ti laptop GPU; performance
+   on the integrated-graphics target still depends on the evaluator's hardware.
 6. Manim code can parse successfully and still contain runtime, layout,
    mathematical, or pedagogical problems.
 7. The generated animation code must never be executed without inspection and
@@ -455,17 +466,6 @@ flowchart LR
     F --> B
 ```
 
-## Two-minute demonstration plan
-
-1. Disable networking and show the verified GGUF running through `llama.cpp`.
-2. Ask for a Primary 3 fraction animation using the public demonstration prompt.
-3. Show the model produce one complete Manim scene.
-4. Inspect the Python and render it locally in a sandbox.
-5. Play the resulting fraction animation.
-6. Repeat with the Primary 4 multiplication-array prompt.
-7. Close with the training curve, public model checksum, offline value, and the
-   verifier-driven roadmap.
-
 ## Repository structure
 
 ```text
@@ -473,6 +473,7 @@ flowchart LR
 ├── README.md
 ├── REPORT.md
 ├── metadata.json
+├── submission.json
 ├── download_model.sh
 ├── model/
 │   └── .gitkeep
@@ -504,15 +505,13 @@ flowchart LR
 - [x] Offline `llama.cpp` packaging
 - [x] Training script and Colab notebook included
 - [x] Full SFT report and raw metric evidence included
-- [ ] Replace `TODO_REPLACE_TEAM_ID` in `metadata.json`
-- [ ] Run the participant-mode profiler and retain `submission.json`
-- [ ] Add measured CPU, RAM, and thermal results
-- [ ] Complete the held-out generation and render evaluation
-- [ ] Record the two-minute offline demonstration video
+- [x] Participant-mode profiler results retained in `submission.json`
+- [x] Measured latency, throughput, memory, CPU, and thermal status documented
 
 ## Links and references
 
 - [Final Q4_K_M model](https://huggingface.co/Chimanwakis/qwen_manim_animation_q4_k_m_v5)
+- [Dataset](https://huggingface.co/datasets/Chimanwakis/manim_animation_dataset)
 - [Qwen2.5-Coder technical report](https://arxiv.org/abs/2409.12186)
 - [Manim Community Edition](https://www.manim.community/)
 - [ADTC 2026 official challenge](https://africadeeptech.org/challenge-2026/)
